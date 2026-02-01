@@ -157,18 +157,21 @@ bool IntBST::contains(int value) const {
 IntBST::Node* IntBST::getPredecessorNode(int value) const{
     // 2 ways, either up a couple parent nodes or the right most value in the left subgraph
     Node *p = getNodeFor(value, root);
-    if(p -> left == nullptr && p -> right == nullptr && p -> parent -> info < value){
-        return p -> parent;
+    if(p == nullptr) return nullptr;
+    if(p->left != nullptr){
+        Node *target = p -> left;
+        while(target->right != nullptr){
+            target = target -> right;
+        }
+        return target;
     }
-    Node *leftn = p -> left;
-    Node *j = p -> left;
-        if(leftn != nullptr){
-        while( j -> right != nullptr && p -> left != nullptr){
-            // cout<< j -> info << "_";
-            j = j -> right;
-        }
-        }
-    return j;
+    Node *child = p;
+    Node *parent = p -> parent;
+    while(parent != nullptr && parent -> left == child){
+        parent = parent -> parent;
+        child = child -> parent;
+    }
+    return parent;
 }
 
 // returns the predecessor value of the given value or 0 if there is none
