@@ -213,10 +213,64 @@ int IntBST::getSuccessor(int value) const{
 // deletes the Node containing the given value from the tree
 // returns true if the node exist and was deleted or false if the node does not exist
 bool IntBST::remove(int value){
-    // if(getNodeFor(value) == root -> info){
-    //     Node *prede = getPredecessor(value)
-    //     Node *prede_prede = getPredecessor(prede);
-    //     Node *to_delte = getNodeFor(value);
-    // }
+     
+
+    Node *p = getNodeFor(value, root);
+    if(p == nullptr) return false;
+    if(p -> left && p -> right){
+        Node *predecessor = getPredecessorNode(value);
+        Node *left_n = p -> left;
+        p -> info = predecessor -> info;
+        p = predecessor;
+    }
+    // leaft node simple case
+    if(p -> left == nullptr && p -> right == nullptr){
+        if(p -> parent != nullptr){
+            Node *parent_n = p -> parent;
+            if(parent_n -> left == p){
+                parent_n -> left = nullptr;
+            }
+            else {
+                parent_n -> right = nullptr;
+            }
+            delete p;
+            return true;
+        } else {
+            root = nullptr;
+            delete p;
+            return true;
+        }
+
+    }
+
+    if((p -> left == nullptr && p -> right) || (p -> right == nullptr && p->left)){
+        Node *child_node = nullptr; 
+        if(p -> left != nullptr){
+            child_node = p -> left;
+        } else {
+            child_node = p -> right;
+        }
+        bool isleftofParent = false;
+        bool isrightofParent =false;
+        if(p -> parent != nullptr){
+            Node *parent_n = p -> parent;
+            if(parent_n -> left == p){
+                isleftofParent = true;
+                parent_n -> left = child_node;
+                child_node -> parent = parent_n;
+            } else {
+                isrightofParent = true;
+                parent_n -> right = child_node;
+                child_node -> parent = parent_n;
+            }
+            delete p;
+            return true;
+        } else {
+            root = child_node;
+            child_node -> parent = nullptr;
+            delete p;
+            return true;
+        }
+    }
     return false;
 }
