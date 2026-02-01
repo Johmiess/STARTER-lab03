@@ -9,7 +9,7 @@
 using std::cout;
 
 IntBST::IntBST() { 
-	root = new Node(0);
+	root = nullptr;
 }
 
 // destructor deletes all nodes
@@ -37,15 +37,16 @@ bool IntBST::insert(int value) {
 
 // recursive helper for insert (assumes n is never 0)
 bool IntBST::insert(int value, Node *n) {
+    if(root == nullptr){
+        Node *p = new Node(value);
+        root = p;
+        return true;
+    }
     if(n == nullptr){
         return false;
     }
     if(n -> info == value){
         return false;
-    }
-    if(root -> info == 0){
-        Node *p = new Node(value);
-        root = p;
     }
     if( n -> right == nullptr && n -> info < value){
         Node *p = new Node(value);
