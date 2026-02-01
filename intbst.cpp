@@ -161,9 +161,11 @@ IntBST::Node* IntBST::getPredecessorNode(int value) const{
     }
     Node *leftn = p -> left;
     Node *j = p -> left;
+        if(leftn != nullptr){
         while( j -> right != nullptr && p -> left != nullptr){
             // cout<< j -> info << "_";
             j = j -> right;
+        }
         }
     return j;
 }
@@ -171,37 +173,44 @@ IntBST::Node* IntBST::getPredecessorNode(int value) const{
 // returns the predecessor value of the given value or 0 if there is none
 int IntBST::getPredecessor(int value) const{
     Node *p = getPredecessorNode(value);
-    if (p != nullptr) return p -> info;
+    if (p != nullptr)return p -> info;
     return 0;
 }
 
 // returns the Node containing the successor of the given value
 IntBST::Node* IntBST::getSuccessorNode(int value) const{
-    // Node *p = getNodeFor(value, root);
-    // if(p -> left == nullptr && p -> right == nullptr && p -> parent -> info < value){
-    //     return p -> parent;
-    // }
-    // Node *rightn = p -> right;
-    // Node *j = p -> right;
-    // while(rightn != nullptr){
-    //     while( j -> right != nullptr){
-    //         // cout<< j -> info << "_";
-    //         j = j -> right;
-    //     }
-    //     // cout << leftn -> info << "_";
-    //     rightn = rightn -> right;
-    // }
-    // return j;
+    Node *p = getNodeFor(value, root);
+    if(p -> left == nullptr && p -> right == nullptr && p -> parent -> info > value){
+        return p -> parent;
+    }
+    Node *rightn = p -> right;
+    Node *j = p -> right;
+    if(rightn != nullptr){
+        while( j -> right != nullptr){
+            // cout<< j -> info << "_";
+            j = j -> right;
+        }
+        // cout << leftn -> info << "_";
+        rightn = rightn -> right;
+    }
+    return j;
     return nullptr;
 }
 
 // returns the successor value of the given value or 0 if there is none
 int IntBST::getSuccessor(int value) const{
-    return 1;
+    Node *p = getSuccessorNode(value);
+    if(p != nullptr) return p -> info;
+    return 0;
 }
 
 // deletes the Node containing the given value from the tree
 // returns true if the node exist and was deleted or false if the node does not exist
 bool IntBST::remove(int value){
-    return true;
+    // if(getNodeFor(value) == root -> info){
+    //     Node *prede = getPredecessor(value)
+    //     Node *prede_prede = getPredecessor(prede);
+    //     Node *to_delte = getNodeFor(value);
+    // }
+    return false;
 }
