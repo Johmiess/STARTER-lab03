@@ -183,6 +183,7 @@ int IntBST::getPredecessor(int value) const{
 
 // returns the Node containing the successor of the given value
 IntBST::Node* IntBST::getSuccessorNode(int value) const{
+    if(p == nullptr) return nullptr;
     Node *p = getNodeFor(value, root);
     if(p -> right != nullptr){
         Node *curr = p -> right;
